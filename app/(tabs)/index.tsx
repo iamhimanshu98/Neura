@@ -18,14 +18,23 @@ import { useThemeContext } from '../../context/ThemeContext';
 import { sendMessage, type ChatMessage } from '../../services/api';
 
 export default function ChatScreen() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: 'welcome',
+      text: 'What can I help you with?',
+      isUser: false,
+      timestamp: new Date(),
+    },
+  ]);
+
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const { theme } = useThemeContext();
   const systemColorScheme = useColorScheme();
-  const isDark = theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
+  const isDark =
+    theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
 
   const styles = getStyles(isDark);
 
@@ -64,12 +73,14 @@ export default function ChatScreen() {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.content}
-        keyboardVerticalOffset={100}>
+        keyboardVerticalOffset={100}
+      >
         <ScrollView
           ref={scrollViewRef}
           style={styles.messagesContainer}
           contentContainerStyle={styles.messagesContent}
-          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}>
+          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+        >
           {messages.map((message) => (
             <Animated.View
               key={message.id}
@@ -77,12 +88,16 @@ export default function ChatScreen() {
               style={[
                 styles.messageBubble,
                 message.isUser ? styles.userMessage : styles.aiMessage,
-              ]}>
+              ]}
+            >
               <Text
                 style={[
                   styles.messageText,
-                  message.isUser ? styles.userMessageText : styles.aiMessageText,
-                ]}>
+                  message.isUser
+                    ? styles.userMessageText
+                    : styles.aiMessageText,
+                ]}
+              >
                 {message.text}
               </Text>
             </Animated.View>
@@ -113,7 +128,8 @@ export default function ChatScreen() {
           <TouchableOpacity
             style={styles.sendButton}
             onPress={handleSendMessage}
-            disabled={!inputText.trim() || isLoading}>
+            disabled={!inputText.trim() || isLoading}
+          >
             <Ionicons
               name="send"
               size={24}
