@@ -18,7 +18,7 @@ export default function TabLayout() {
           backgroundColor: effectiveDark ? '#1A1A1A' : '#FFFFFF',
           borderTopColor: effectiveDark ? '#333333' : '#E5E5E5',
         },
-        tabBarActiveTintColor: '#7C3AED',
+        tabBarActiveTintColor: '#7C3AF0',
         tabBarInactiveTintColor: effectiveDark ? '#888888' : '#666666',
       }}>
       <Tabs.Screen
