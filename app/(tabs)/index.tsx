@@ -10,12 +10,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useThemeContext } from '../../context/ThemeContext';
 import { sendMessage, type ChatMessage } from '../../services/api';
+import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -38,6 +40,7 @@ export default function ChatScreen() {
 
   const styles = getStyles(isDark);
 
+  // Send message function (same as before)
   const handleSendMessage = useCallback(async () => {
     if (!inputText.trim() || isLoading) return;
 
@@ -62,6 +65,14 @@ export default function ChatScreen() {
       setIsLoading(false);
     }
   }, [inputText, isLoading]);
+
+  const handleKeyPress = (
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ) => {
+    if (e.nativeEvent.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -124,6 +135,7 @@ export default function ChatScreen() {
             placeholderTextColor={isDark ? '#666666' : '#999999'}
             multiline
             editable={!isLoading}
+            onKeyPress={handleKeyPress} // Detect key press
           />
           <TouchableOpacity
             style={styles.sendButton}
@@ -254,5 +266,3 @@ const getStyles = (isDark: boolean) =>
       padding: 8,
     },
   });
-
-// Hello
