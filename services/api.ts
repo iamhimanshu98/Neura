@@ -1,11 +1,10 @@
 import { Platform } from 'react-native';
 
-// Use localhost for iOS simulator, 10.0.2.2 for Android emulator, and deployment URL for production
 const getBaseUrl = () => {
-  if (__DEV__) {
-    return 'http://127.0.0.1:5000'; // Use the correct local IP address
+  if (Platform.OS === 'android') {
+    return 'http://10.0.2.2:5000'; // Android Emulator
   }
-  return 'http://192.168.119.80:5000'; // Replace with your production API URL
+  return 'http://127.0.0.1:5000'; // iOS Simulator
 };
 
 
