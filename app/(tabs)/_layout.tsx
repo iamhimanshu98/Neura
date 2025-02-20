@@ -4,23 +4,25 @@ import { Ionicons } from '@expo/vector-icons';
 import { useThemeContext } from '../../context/ThemeContext';
 
 export default function TabLayout() {
-  const { theme, isDark } = useThemeContext();
+  const { theme } = useThemeContext();
   const systemColorScheme = useColorScheme();
-  
-  // Use system theme if auto, otherwise use manual selection
-  const effectiveDark = theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
+
+  // Determine if dark mode should be applied
+  const isDark =
+    theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: effectiveDark ? '#1A1A1A' : '#FFFFFF',
-          borderTopColor: effectiveDark ? '#333333' : '#E5E5E5',
+          backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
+          borderTopColor: isDark ? '#333333' : '#E5E5E5',
         },
         tabBarActiveTintColor: '#7C3AF0',
-        tabBarInactiveTintColor: effectiveDark ? '#888888' : '#666666',
-      }}>
+        tabBarInactiveTintColor: isDark ? '#888888' : '#666666',
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -31,11 +33,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="history"
+        name="history" // ✅ Updated from "history" to "explore"
         options={{
-          title: 'History',
+          title: 'Explore',
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="time" size={size} color={color} />
+            <Ionicons name="compass" size={size} color={color} /> // ✅ Changed icon
           ),
         }}
       />
