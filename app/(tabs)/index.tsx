@@ -12,12 +12,14 @@ import {
   ActivityIndicator,
   Keyboard,
 } from 'react-native';
+import { Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useThemeContext } from '../../context/ThemeContext';
 import { sendMessage, type ChatMessage } from '../../services/api';
 import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { useFonts } from 'expo-font';
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -28,6 +30,11 @@ export default function ChatScreen() {
       timestamp: new Date(),
     },
   ]);
+
+  const [fontsLoaded] = useFonts({
+    'Gilroy-Regular': require('../../assets/fonts/Gilroy-Regular.ttf'),
+    'Gilroy-Bold': require('../../assets/fonts/Gilroy-Bold.ttf'),
+  });
 
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +84,13 @@ export default function ChatScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Neura</Text>
+        <View style={styles.headerTop}>
+          <Image
+            source={require('../../assets/images/android-chrome-512x512.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.title}>Neura </Text>
+        </View>
         <Text style={styles.subtitle}>Your AI Assistant</Text>
       </View>
 
@@ -172,15 +185,26 @@ const getStyles = (isDark: boolean) =>
       borderBottomWidth: 1,
       borderBottomColor: isDark ? '#333333' : '#E5E5E5',
     },
+    headerTop: {
+      flexDirection: 'row',
+      alignItems: 'center', // Align logo and title vertically
+      gap: 8, // Adjust spacing between logo and title
+    },
     title: {
       fontSize: 28,
-      fontWeight: 'bold',
+      fontFamily: 'Gilroy-Regular',
+      // fontWeight: '900',
       color: isDark ? '#FFFFFF' : '#000000',
     },
     subtitle: {
       fontSize: 16,
       color: isDark ? '#888888' : '#666666',
       marginTop: 4,
+    },
+    logo: {
+      width: 24, // Adjust as needed
+      height: 24,
+      resizeMode: 'contain',
     },
     content: {
       flex: 1,
