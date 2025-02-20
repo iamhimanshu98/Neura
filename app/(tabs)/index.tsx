@@ -236,6 +236,7 @@ const getStyles = (isDark: boolean) =>
     messageText: {
       fontSize: 16,
       lineHeight: 24,
+      fontFamily: 'Gilroy-Regular',
     },
     userMessageText: {
       color: '#FFFFFF',
