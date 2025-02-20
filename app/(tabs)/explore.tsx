@@ -22,7 +22,8 @@ const suggestedPrompts = [
 export default function ExploreScreen() {
   const { theme } = useThemeContext();
   const systemColorScheme = useColorScheme();
-  const isDark = theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
+  const isDark =
+    theme === 'auto' ? systemColorScheme === 'dark' : theme === 'dark';
   const styles = getStyles(isDark);
 
   const handlePromptPress = (prompt: string) => {
@@ -31,16 +32,23 @@ export default function ExploreScreen() {
   };
 
   const renderPrompt = ({ item }: { item: { id: string; text: string } }) => (
-    <TouchableOpacity style={styles.promptCard} onPress={() => handlePromptPress(item.text)}>
+    <TouchableOpacity
+      style={styles.promptCard}
+      onPress={() => handlePromptPress(item.text)}
+    >
       <Text style={styles.promptText}>{item.text}</Text>
-      <Ionicons name="arrow-forward" size={18} color={isDark ? '#FFFFFF' : '#000000'} />
+      <Ionicons
+        name="arrow-forward"
+        size={18}
+        color={isDark ? '#FFFFFF' : '#000000'}
+      />
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Try This</Text>
+        <Text style={styles.title}>Explore</Text>
       </View>
 
       <FlatList

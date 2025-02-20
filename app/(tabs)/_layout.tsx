@@ -33,7 +33,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="history" // ✅ Updated from "history" to "explore"
+        name="explore" // ✅ Updated from "history" to "explore"
         options={{
           title: 'Explore',
           tabBarIcon: ({ size, color }) => (
