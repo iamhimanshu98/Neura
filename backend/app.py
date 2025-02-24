@@ -36,14 +36,12 @@ def chat_with_bot(user_input):
         "Content-Type": "application/json"
     }
 
-    # Send request to OpenRouter
     response = requests.post(API_URL, json=payload, headers=headers)
 
     if response.status_code == 200:
         data = response.json()
         assistant_reply = data["choices"][0]["message"]["content"]
 
-        # Add bot response to history
         chat_history.append({"role": "assistant", "content": assistant_reply})
 
         return assistant_reply
@@ -58,7 +56,6 @@ def chat():
     if not user_message:
         return jsonify({"response": "Please enter a message."})
 
-    # Get AI-generated response
     ai_response = chat_with_bot(user_message)
 
     return jsonify({"response": ai_response})
