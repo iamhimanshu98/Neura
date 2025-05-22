@@ -25,7 +25,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
-      text: 'What can I help you with?',
+      text: 'What can I help you with ?',
       isUser: false,
       timestamp: new Date(),
     },
